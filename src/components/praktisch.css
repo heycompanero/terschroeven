@@ -1,0 +1,86 @@
+.pr { color: var(--forest); }
+
+.pr-head { max-width: 52rem; }
+.pr-title {
+  font-size: clamp(32px, 5.2vw, 78px);
+  line-height: 1.06;
+  margin-top: clamp(16px, 2vw, 24px);
+}
+
+.pr-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(30px, 4vw, 64px);
+  margin-top: clamp(50px, 7vw, 96px);
+  align-items: start;
+}
+
+.pr-uren ul { list-style: none; margin-top: 20px; }
+.pr-uren li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: clamp(12px, 1.5vw, 18px) 0;
+  border-bottom: 1px solid rgba(22, 36, 27, 0.15);
+}
+.pr-uren li span {
+  font-family: var(--serif);
+  font-size: clamp(19px, 2vw, 27px);
+}
+.pr-uren li b {
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brass);
+  text-align: right;
+}
+.pr-uren li.is-dicht { opacity: 0.42; }
+.pr-uren li.is-dicht b { color: rgba(22, 36, 27, 0.6); }
+.pr-uren-note {
+  margin-top: 22px;
+  font-size: 14px;
+  color: rgba(22, 36, 27, 0.62);
+  max-width: 46ch;
+}
+
+.pr-card {
+  background: var(--forest);
+  color: var(--cream);
+  padding: clamp(28px, 3.4vw, 46px);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(14px, 1.8vw, 22px);
+}
+.pr-tel {
+  font-size: clamp(30px, 3.6vw, 50px);
+  line-height: 1;
+  color: var(--brass-l);
+  transition: opacity 0.4s;
+}
+.pr-tel:hover { opacity: 0.75; }
+.pr-mail { font-size: 15px; opacity: 0.75; border-bottom: 1px solid rgba(244, 238, 226, 0.3); padding-bottom: 2px; }
+.pr-card .rule { width: 100%; }
+.pr-adres { font-style: normal; font-size: clamp(18px, 1.7vw, 23px); line-height: 1.45; }
+
+.pr-weetjes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 50px);
+  margin-top: clamp(56px, 7vw, 96px);
+  padding-top: clamp(34px, 4vw, 52px);
+  border-top: 1px solid rgba(22, 36, 27, 0.18);
+}
+.pr-weet h4 { font-size: clamp(18px, 1.6vw, 22px); margin-bottom: 10px; }
+.pr-weet p { font-size: 14px; color: rgba(22, 36, 27, 0.68); }
+
+@media (max-width: 900px) {
+  .pr-grid { grid-template-columns: 1fr; }
+  .pr-weetjes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .pr-weetjes { grid-template-columns: 1fr; }
+}

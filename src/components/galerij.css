@@ -1,0 +1,128 @@
+.ga {
+  color: var(--cream);
+  padding: 0;
+  overflow: hidden;
+}
+
+.ga-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.6vw, 42px);
+  height: 100svh;
+  padding: 0 clamp(20px, 5vw, 72px);
+  width: max-content;
+  will-change: transform;
+}
+
+.ga-intro {
+  width: clamp(260px, 30vw, 420px);
+  flex: none;
+  padding-right: clamp(10px, 2vw, 30px);
+}
+.ga-intro h2 {
+  font-size: clamp(38px, 4.6vw, 72px);
+  margin: 16px 0 20px;
+}
+.ga-intro p:last-of-type {
+  font-size: 15px;
+  color: rgba(244, 238, 226, 0.6);
+  max-width: 32ch;
+}
+.ga-arrow {
+  display: block;
+  margin-top: 34px;
+  height: 1px;
+  width: 100%;
+  background: rgba(244, 238, 226, 0.2);
+  position: relative;
+}
+.ga-arrow i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 40%;
+  background: var(--brass);
+  animation: gaSlide 3.2s var(--ease) infinite;
+}
+@keyframes gaSlide {
+  0% { transform: translateX(0); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: translateX(150%); opacity: 0; }
+}
+
+.ga-card { flex: none; width: clamp(270px, 30vw, 450px); }
+.ga-card-2 { width: clamp(320px, 38vw, 560px); }
+.ga-card-3 { width: clamp(250px, 24vw, 370px); }
+
+.ga-card-media {
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 4 / 5;
+}
+.ga-card-2 .ga-card-media { aspect-ratio: 5 / 4; }
+.ga-card-3 .ga-card-media { aspect-ratio: 3 / 4; }
+.ga-card-media img {
+  width: 118%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.ga-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 16px;
+}
+.ga-card figcaption b { font-weight: 400; font-size: clamp(17px, 1.5vw, 21px); }
+.ga-card figcaption span {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244, 238, 226, 0.5);
+}
+
+.ga-end {
+  flex: none;
+  width: clamp(240px, 26vw, 340px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+.ga-end p { font-size: clamp(24px, 2.6vw, 38px); line-height: 1.2; }
+
+@media (max-width: 860px) {
+  .ga { padding: clamp(90px, 14vh, 150px) 0; }
+  .ga-track {
+    width: auto;
+    height: auto;
+    flex-wrap: wrap;
+    gap: clamp(28px, 6vw, 44px);
+    padding: 0 var(--gut);
+    max-width: var(--maxw);
+    margin: 0 auto;
+  }
+  .ga-intro { width: 100%; }
+  .ga-arrow { display: none; }
+  /* the run stacks into a grid here — there is nothing to scroll sideways */
+  .ga-hint { display: none; }
+  .ga-card,
+  .ga-card-2,
+  .ga-card-3 { width: calc(50% - clamp(14px, 3vw, 22px)); }
+  .ga-card-media,
+  .ga-card-2 .ga-card-media,
+  .ga-card-3 .ga-card-media { aspect-ratio: 4 / 5; }
+  .ga-card-media img { width: 100%; }
+  .ga-end { width: 100%; }
+}
+@media (max-width: 520px) {
+  .ga-card,
+  .ga-card-2,
+  .ga-card-3 { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ga-arrow i { animation: none; }
+}

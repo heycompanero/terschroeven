@@ -1,0 +1,196 @@
+:root {
+  --ink: #0d1210;
+  --forest: #16241b;
+  --moss: #24382b;
+  --cream: #f4eee2;
+  --parch: #e3d9c5;
+  --sand: #cfc1a4;
+  --brass: #b0854a;
+  --brass-l: #d5ac6d;
+  --clay: #8d5b3a;
+
+  --maxw: 1320px;
+  --gut: clamp(20px, 5vw, 72px);
+
+  --serif: 'Marcellus', 'Times New Roman', serif;
+  --sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* The canvas colour lives on <html> so <body> can stay transparent — a body
+   background would paint over the fixed colour rig behind the content. */
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--ink);
+}
+
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  color: var(--cream);
+  background: transparent;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* The neutral base the whole page sits on. Every section paints its own
+   colour over it, so the base only shows through where two sections meet. */
+.bg-rig {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--ink);
+}
+
+/* A faint grain that sits over the colour, so large flat fields still breathe. */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Each section's colour lives on a soft-edged layer. The layer reaches up
+   into the previous section's bottom padding, where that section's own layer
+   is fading out — so the two dissolve into one another over a band of empty
+   space, and text always sits on the fully opaque middle. */
+[data-bg] {
+  --fade: clamp(76px, 15vh, 158px);
+  --fade-top: var(--fade);
+  --fade-bot: var(--fade);
+}
+[data-bg]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--fade-top));
+  bottom: 0;
+  z-index: -1;
+  background: var(--sec-bg, transparent);
+  -webkit-mask-image: var(--sec-mask);
+  mask-image: var(--sec-mask);
+  pointer-events: none;
+
+  /* eased stops, so the ramp reads as a dissolve rather than a gradient band */
+  --sec-mask: linear-gradient(
+    to bottom,
+    transparent 0,
+    rgba(0, 0, 0, 0.12) calc(var(--fade-top) * 0.3),
+    rgba(0, 0, 0, 0.55) calc(var(--fade-top) * 0.6),
+    rgba(0, 0, 0, 0.88) calc(var(--fade-top) * 0.83),
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bot)),
+    rgba(0, 0, 0, 0.88) calc(100% - var(--fade-bot) * 0.83),
+    rgba(0, 0, 0, 0.55) calc(100% - var(--fade-bot) * 0.6),
+    rgba(0, 0, 0, 0.12) calc(100% - var(--fade-bot) * 0.3),
+    transparent 100%
+  );
+}
+
+main, footer { position: relative; z-index: 1; }
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+::selection { background: var(--brass); color: var(--ink); }
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gut);
+}
+
+/* Sections breathe generously: the colour crossfade between two sections
+   happens in this empty space, so text never sits in a half-mixed field. */
+section {
+  position: relative;
+  padding: clamp(96px, 17vh, 190px) 0;
+}
+
+h1, h2, h3, .serif {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.06;
+}
+
+.eyebrow {
+  font-size: clamp(10px, 0.78vw, 12px);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--brass-l);
+}
+
+.lead {
+  font-size: clamp(17px, 1.35vw, 21px);
+  line-height: 1.72;
+  font-weight: 300;
+}
+
+p { line-height: 1.75; }
+
+.rule {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.16;
+  transform-origin: left;
+}
+
+/* Reveal primitive. Elements start hidden and are eased in by useReveal. */
+.rv { opacity: 0; transform: translateY(26px); will-change: transform, opacity; }
+.still .rv { opacity: 1 !important; transform: none !important; }
+
+/* Word-level reveal used on the big statements. */
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders, taken back so line rhythm is unchanged */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.w > span { display: inline-block; transform: translateY(105%); will-change: transform; }
+.still .w > span { transform: none !important; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 30px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.6s var(--ease);
+}
+.btn span { position: relative; z-index: 1; }
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.6s var(--ease);
+}
+.btn:hover { color: var(--brass-l); }
+.btn:hover::before { transform: scaleY(1); }
+.btn.solid { background: var(--brass); border-color: var(--brass); color: var(--ink); }
+.btn.solid:hover { color: var(--cream); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1; transform: none; }
+  .w > span { transform: none; }
+}
