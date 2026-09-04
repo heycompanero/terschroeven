@@ -6,6 +6,10 @@ overgangen tussen de secties.
 
 Vite + React + GSAP (ScrollTrigger) + Lenis.
 
+Deze repo is privé en er staat geen live site achter: GitHub Pages kan niet
+publiceren vanaf een privérepo op een Free-account. Draai hem lokaal met
+`npm run dev`.
+
 ## Draaien
 
 ```bash
